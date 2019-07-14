@@ -7,6 +7,13 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/pulse/bootstrap.min.css" rel="stylesheet" integrity="sha384-/uQFqO50IaQu2rNJYKPpV7zwsWJtd6V4DGX4wMw1ATz4KPuZEV96qQ2heVAw2kr2" crossorigin="anonymous"> 
+
+    {% if title %}
+        <title>Olivia Romo - {{ title }}</title>
+    {% else %}
+        <title>Olivia Romo</title>
+    {% endif %}
+
     <title>Home</title>
   </head>
   <body>
@@ -37,6 +44,13 @@
         <div class="row">
             <div class="col-md-8">
                 {% block content %} {% endblock %}
+            </div>
+            <div class="col-md-4">
+                <h3>Upcoming Events </h3>
+                <div class="responsiveCal">
+                    <iframe src="https://calendar.google.com/calendar/embed?src=e7m6joc1tt2dkuavd1cai5pq38%40group.calendar.google.com&ctz=America%2FDenver" style="border: 0" width="500" height="300" frameborder="0" scrolling="no">
+                    </iframe>
+                </div>
             </div>
         </div>
       </main>

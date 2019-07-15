@@ -1,4 +1,11 @@
 {% extends "layout.html" %}
+
+{% block photo %}
+<h1> TEST </h1>
+
+{% endblock %}
+
+
 {% block content %}
     <h1> This is the home page </h1>
     <p> 
@@ -12,4 +19,15 @@
     <p>
     Morbi non leo nec ipsum vehicula placerat. Morbi id suscipit libero. Pellentesque nec porta risus. Maecenas viverra accumsan sem non tincidunt. Cras nec eleifend nibh. In eget fringilla ante, vitae iaculis risus. Vivamus auctor egestas dapibus. Nullam dignissim neque et erat efficitur sagittis in non massa. Aliquam egestas erat id volutpat accumsan. </p>
     </p>
+
+    <div class="row">
+     <div class="col-md-4">
+         <h3>Upcoming Events </h3>
+                <div class="responsiveCal">
+                    <iframe src="https://calendar.google.com/calendar/embed?src=e7m6joc1tt2dkuavd1cai5pq38%40group.calendar.google.com&ctz=America%2FDenver" style="border: 0" width="800" height="600" frameborder="0" scrolling="no">
+                    </iframe>
+                </div>
+     </div>
+    </div>
+ 
 {% endblock content %}

@@ -17,9 +17,9 @@
     <title>Home</title>
   </head>
   <body>
-
+      {% block photo %} {% endblock %}
     <!-- Navbar -->
-     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+     <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
      <a class="navbar-brand" href="#">Olivia Romo Poetry</a>
      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -42,17 +42,10 @@
 
       <main role="main" class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-12">
                 {% block content %} {% endblock %}
             </div>
-            <div class="col-md-4">
-                <h3>Upcoming Events </h3>
-                <div class="responsiveCal">
-                    <iframe src="https://calendar.google.com/calendar/embed?src=e7m6joc1tt2dkuavd1cai5pq38%40group.calendar.google.com&ctz=America%2FDenver" style="border: 0" width="500" height="300" frameborder="0" scrolling="no">
-                    </iframe>
-                </div>
-            </div>
-        </div>
+       </div>
       </main>
 
 

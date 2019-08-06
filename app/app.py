@@ -135,7 +135,21 @@ def login_required(fn):
         return redirect(url_for('login', next=request.path))
     return inner
 
-@app.route('/login/', methods=['GET', 'POST'])
+@app.route('/')
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+@app.route('/about')
+def about():
+    return render_template('about.html', title='About')
+
+def main():
+    database.create_tables([Entry, FTSEntry])
+    app.run(debug=True)
+
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     next_url = request.args.get('next') or request.form.get('next')
     if request.method == 'POST' and request.form.get('password'):
@@ -149,29 +163,29 @@ def login():
             flash('Incorrect password.', 'danger')
     return render_template('login.html', next_url=next_url)
 
-@app.route('/logout/', methods=['GET', 'POST'])
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
     if request.method == 'POST':
         session.clear()
         return redirect(url_for('login'))
     return render_template('logout.html')
 
-@app.route('/blog/')
+@app.route('/blog')
 def blog():
     search_query = request.args.get('q')
     if search_query:
         query = Entry.search(search_query)
     else:
         query = Entry.public().order_by(Entry.timestamp.desc())
-    return object_list('blog.html', query, search=search_query)
+    return object_list('blog.html', query, search=search_query, title='Blog')
 
-@app.route('/drafts/')
+@app.route('/drafts')
 @login_required
 def drafts():
     query = Entry.drafts().order_by(Entry.timestamp.desc())
     return object_list('blog.html', query)
 
-@app.route('/create/', methods=['GET', 'POST'])
+@app.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
     if request.method == 'POST':
@@ -219,19 +233,6 @@ def edit():
             flash('Title and Content are required.', 'danger')
     return render_template('edit.html')
 
-
-@app.route("/")
-@app.route("/home")
-def home():
-    return render_template('home.html')
-
-@app.route("/about")
-def about():
-    return render_template('about.html', title='About')
-
-def main():
-    database.create_tables([Entry, FTSEntry])
-    app.run(debug=True)
 
 if __name__ == '__main__':
     main()

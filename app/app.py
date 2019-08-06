@@ -12,7 +12,7 @@ import functools
 import os
 import re
 import urllib
-from flask import (Flask, render_template, url_for, abort, flash, Markup
+from flask import (Flask, render_template, url_for, abort, flash, Markup,
                    redirect, request, Response, session)
 from markdown import markdown
 from markdown.extensions.codehilite import CodeHiliteExtension
@@ -25,7 +25,7 @@ from playhouse.sqlite_ext import *
 
 ADMIN_PASSWORD = 'secret'
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
-DATABASE = 'sqliteext://%s' % os.path.join(APP_DIR, 'blog.db')
+DATABASE = 'sqliteext:///%s' % os.path.join(APP_DIR, 'blog.db')
 DEBUG = True
 SECRET_KEY = 'super secret key!' # Use for encryping cookie
 SITE_WIDTH = 800
@@ -79,6 +79,50 @@ Used for fast lookup?
 
     class Meta:
         database = database
+
+@app.template_filter('clean_querystring')
+def clean_querystring(request_args, *keys_to_remove, **new_values):
+    querystring = dict((key, value) for key, value in request_args.items())
+    for key in keys_to_remove:
+        querystring.pop(key, None)
+    querystring.update(new_values)
+    return urllib.urlencode(querystring)
+
+@app.errorhandler(404)
+def not_found(exc):
+    return Response('<h3>Not Found </h3>'), 404
+
+def login_required(fn):
+    @functools.wraps(fn)
+    def inner(*args, **kwargs):
+        if session.get('logged_in'):
+            return fn(*args, **kwargs)
+        return redirect(url_for('login', next=request.path))
+    return inner
+
+@app.route('/login/', methods=['GET', 'POST'])
+def login():
+    next_url = request.args.get('next') or request.form.get('next')
+    if request.method == 'POST' and request.form.get('password'):
+        password = request.form.get('password')
+        if password == app.config['ADMIN_PASSWORD']:
+            session['logged_in'] = True
+            session.permanent = True
+            flash('You are now logged in.', 'success')
+            return redirect(next_url or url_for('index')
+        else:
+            flash('Incorrect password.', 'danger')
+    return render_template('login.html', next_url=next_url)
+
+@app.route('/logout/', methods=['GET', 'POST'])
+def logout():
+    if request.method == 'POST':
+        session.clear()
+        return redirect(url_for('login'))
+    return render_template('logout.html')
+
+
+
 @app.route("/")
 @app.route("/home")
 def home():
@@ -88,7 +132,9 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
-
-if __name__ == '__main__':
+def main():
+    database.create_tables([Entry, FTSEntry])
     app.run(debug=True)
 
+if __name__ == '__main__':
+    main()

@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/pulse/bootstrap.min.css" rel="stylesheet" integrity="sha384-/uQFqO50IaQu2rNJYKPpV7zwsWJtd6V4DGX4wMw1ATz4KPuZEV96qQ2heVAw2kr2" crossorigin="anonymous"> 
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/pulse/bootstrap.min.css" rel="stylesheet" integrity="sha384-/uQFqO50IaQu2rNJYKPpV7zwsWJtd6V4DGX4wMw1ATz4KPuZEV96qQ2heVAw2kr2" crossorigin="anonymous"/> 
+    <!--Custom CSS -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='mycss.css') }}"/>
 
     {% if title %}
         <title>Olivia Romo - {{ title }}</title>
@@ -17,7 +19,6 @@
 
 
   <body>
-      {% block photo %} {% endblock %}
     <!-- Navbar -->
      <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
      <a class="navbar-brand" href="#">Olivia Romo Poetry</a>
@@ -40,6 +41,8 @@
       </div>
     </nav>
 
+      {% block photo %} {% endblock %}
+
       <main role="main" class="container">
         <div class="row">
             <div class="col-md-12">
@@ -47,6 +50,9 @@
             </div>
         </div>
       </main>
+
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

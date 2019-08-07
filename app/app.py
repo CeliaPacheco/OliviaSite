@@ -91,7 +91,7 @@ update_search_index.
     def search(cls, query):
         words = [words.strip() for word in query.split() if word.strip()]
         if not words:
-            return Entry.select(). where(Entry.id == 0)
+            return Entry.select().where(Entry.id == 0)
         else:
             search = ' '.join(words)
 
@@ -144,20 +144,18 @@ def login():
             session['logged_in'] = True
             session.permanent = True
             flash('You are now logged in.', 'success')
-            return redirect(next_url or url_for('index'))
+            return redirect(next_url or url_for('home'))
         else:
             flash('Incorrect password.', 'danger')
     return render_template('login.html', next_url=next_url)
 
 @app.route('/logout/', methods=['GET', 'POST'])
 def logout():
-    if request.method == 'POST':
-        session.clear()
-        return redirect(url_for('login'))
-    return render_template('logout.html')
+    session.clear()
+    flash('You have been logged out', 'success')
+    return redirect(url_for('home'))
 
 @app.route('/')
-@app.route('/home/')
 def home():
     return render_template('home.html')
 

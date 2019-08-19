@@ -121,7 +121,7 @@ def clean_querystring(request_args, *keys_to_remove, **new_values):
     for key in keys_to_remove:
         querystring.pop(key, None)
     querystring.update(new_values)
-    return urllib.urlencode(querystring)
+    return urllib.parse.urlencode(querystring)
 
 @app.errorhandler(404)
 def not_found(exc):

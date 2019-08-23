@@ -22,6 +22,7 @@ from micawber.cache import Cache as OEmbedCache
 from peewee import *
 from playhouse.flask_utils import FlaskDB, get_object_or_404, object_list
 from playhouse.sqlite_ext import *
+from modules.Photos import Photos
 
 ADMIN_PASSWORD = 'secret'
 APP_DIR = os.path.dirname(os.path.realpath(__file__))
@@ -163,6 +164,12 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
+
+@app.route('/gallery/')
+def gallery():
+    photos_obj = Photos()
+    photos = photos_obj.get_photos()
+    return render_template("gallery.html", photos=photos)
 
 @app.route('/blog/')
 def blog():

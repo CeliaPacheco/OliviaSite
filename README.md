@@ -5,6 +5,7 @@ This is the repo containing the files for a Flask Application which is intended 
 - [ ] Remove 'About' page
 - [ ] Add bio, events, contact me
 - [ ] Get photo gallery up
+    - [ ] Use this site https://github.com/lokesh/lightbox2 
 - [ ] Media Page
     - [ ] Embed videos on own page
     - [ ] Link to news articles

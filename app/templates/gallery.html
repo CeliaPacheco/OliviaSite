@@ -1,21 +1,32 @@
 {% extends "layout.html" %}
 
+<!-- 
 {% block lightbox %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='lightbox.css') }}" />
 {% endblock %}
-
+-->
 {% block content %}
-    <div class="row">
-    {% for photo in photos %}
-    <div class="col-lg-3 col-md-4 col-6">
-        <a href="/static/images/gallery/{{ photo }}" data-lightbox="{{ photo }}">
-            <img src="/static/images/gallery/{{ photo }}" class="img-fluid">
-        </a>
+<div class="my-5" style="background: #f5e6ff"> 
+<div id="myCarousel" class="carousel slide w-50 ml-auto mr-auto" data-ride="carousel">
+        <div class="carousel-inner" role="listbox">
+        {% for photo in photos %}
+        <div class="carousel-item {% if loop.index == 1 %}active{% endif %}">
+            <img src="/static/images/gallery/{{ photo }}" class="img-fluid d-block w-100">
+        </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-    </div>
-{% endblock %}
+    <a class="carousel-control-prev" href="#myCarousel" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+   <a class="carousel-control-next" href="#myCarousel" data-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </a>
+</div>
+</div>
+ {% endblock %}
 
+<!--
 {% block optJS %}
 <script src="{{ url_for('static', filename='lightbox.js') }}"></script>
 {% endblock %}
+-->
